@@ -30,8 +30,8 @@ $debugMode = $true
 
 
 # $transactions = if($(Get-Content .\settings.json))
-$transactions = if($false)
- { Get-Content .\settings.json -Raw | ConvertFrom-Json }
+$transactions = if([System.IO.File]::Exists(".\settings.json"))
+ { Get-Content .\settings.json | ConvertFrom-Json }
  else 
  {
     Write-Host $args
@@ -72,20 +72,21 @@ $username = $env:USERNAME
 while($notifyIcon.Visible){
     [System.Windows.Forms.Application]::DoEvents()
 
-    foreach($transaction in $transactions){
+    foreach($transaction in $transactions.'settings-by-path'){
         try {
-            $result = Get-ChildItem -ErrorAction Stop -Path $($transaction["source"]) -Filter "*$($transaction["term"])" | Move-Item -Destination $($transaction["destination"]) -Force
-            Write-Output $result
+            Get-ChildItem -Path $($transaction.source) -Filter "*$($transaction.term)" | Move-Item -Destination $($transaction.destination) -Force
             if($debugMode){
                 if($result){
-                    Write-Output "Files transfered!: $($transaction["source"]), extension searched: $($transaction["term"])"
+                    Write-Output "Files transfered!: $($transaction.source), extension searched: $($transaction.term)"
                 } else {
-                    throw [System.Management.Automation.ItemNotFoundException]::new()
+                    if($debugMode) {
+                        Write-Output "Files not found: $($transaction.source), extension searched: $($transaction.term)"
+                    }
                 } 
             }
         }  catch [System.Management.Automation.ItemNotFoundException] {
             if($debugMode) {
-                Write-Output "Files not found: $($transaction["source"]), extension searched: $($transaction["term"])"
+                Write-Output $_
             }
         }
     }

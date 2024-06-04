@@ -1,9 +1,9 @@
 { 
     "settings-by-path": [
         {
-            "source": "",
-            "destination": "",
-            "term": ""
+            "source": "C:/Users/micue/Desktop",
+            "destination": "d:",
+            "term": ".jpg"
         }
     ]
 }
