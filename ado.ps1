@@ -7,13 +7,7 @@ and puts them in a specific folder
 Made by: discollizard
 
 ---
-TODO: make it able to read a file with key-value pairs indicating which extensions go where
-    SUB-TODO: make it startable by both command line and persistent GUI settings
-TODO: make it able to scan files by regex instead of extension
-TODO: make a GUI for it 
-    SUB-TODO: make it a desktop icon
-TODO: make automated testing for it
-TODO: add debug flag to increase output verbosity
+TODO: never use powershell again
 ---
 
 usage: ado {.extension} {.source-folder} {.destination-folder}
@@ -72,7 +66,7 @@ $username = $env:USERNAME
 while($notifyIcon.Visible){
     [System.Windows.Forms.Application]::DoEvents()
 
-    foreach($transaction in $transactions.'settings-by-path'){
+    foreach($transaction in $transactions){
         try {
             Get-ChildItem -Path $($transaction.source) -Filter "*$($transaction.term)" | Move-Item -Destination $($transaction.destination) -Force
             if($debugMode){
