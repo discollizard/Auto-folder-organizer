@@ -1,7 +1,14 @@
 [
     {
-        "source": "C:/Users/micue/Desktop",
-        "destination": "d:",
-        "term": ".jpg"
-    }
+        "source": "source-folder",
+        "destination": "destination-folder",
+        "term": "file-extension"
+    },
+    // {
+    //     "source": "source-folder2",
+    //     "destination": "destination-folder2",
+    //     "term": "file-extension2"
+    // },
+    //...
+    //add more here
 ]
